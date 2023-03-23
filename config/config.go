@@ -14,6 +14,7 @@ type Config struct {
 	Logger     Logger
 	Jaeger     Jaeger
 	Metrics    Metrics
+	MongoDB    MongoDB
 }
 
 // Server config
@@ -46,6 +47,13 @@ type Logger struct {
 	DisableStacktrace bool
 	Encoding          string
 	Level             string
+}
+
+type MongoDB struct {
+	URI      string
+	User     string
+	Password string
+	DB       string
 }
 
 func exportConfig() error {
