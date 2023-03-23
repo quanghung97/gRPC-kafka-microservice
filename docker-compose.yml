@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    # image: quanghung97/products_microservice:latest
     ports:
       - 5555:5555
     environment:
