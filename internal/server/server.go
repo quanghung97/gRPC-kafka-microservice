@@ -34,6 +34,7 @@ type server struct {
 	cfg     *config.Config
 	tracer  opentracing.Tracer
 	mongoDB *mongo.Client
+	productsService.ProductsServiceServer
 }
 
 func NewServer(log logger.Logger, cfg *config.Config, tracer opentracing.Tracer, mongoDB *mongo.Client) *server {
