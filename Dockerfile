@@ -37,7 +37,7 @@ COPY . .
 COPY --from=builder /dist/service /
 #COPY ./database/data.json /database/data.json
 
-EXPOSE 5555
+#EXPOSE 5555
 
 # Command to run the executable
 ENTRYPOINT ["/service"]
