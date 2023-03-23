@@ -30,13 +30,19 @@ func (p *productUC) Create(ctx context.Context, product *models.Product) (*model
 }
 
 func (p *productUC) Update(ctx context.Context, product *models.Product) (*models.Product, error) {
-	panic("implement me")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "productUC.Update")
+	defer span.Finish()
+	return p.productRepo.Update(ctx, product)
 }
 
 func (p *productUC) GetByID(ctx context.Context, productID primitive.ObjectID) (*models.Product, error) {
-	panic("implement me")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "productUC.GetByID")
+	defer span.Finish()
+	return p.productRepo.GetByID(ctx, productID)
 }
 
 func (p *productUC) Search(ctx context.Context, search string, page, size int64) ([]*models.Product, error) {
-	panic("implement me")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "productUC.Search")
+	defer span.Finish()
+	return p.productRepo.Search(ctx, search, page, size)
 }
