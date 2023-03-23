@@ -5,7 +5,10 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/opentracing/opentracing-go"
+
 	"github.com/quanghung97/gRPC-kafka-microservice/config"
+	"github.com/quanghung97/gRPC-kafka-microservice/pkg/jaeger"
 	"github.com/quanghung97/gRPC-kafka-microservice/pkg/logger"
 )
 
@@ -28,6 +31,16 @@ func main() {
 	)
 	appLogger.Infof("Success parsed config: %#v", cfg.AppVersion)
 
+	tracer, closer, err := jaeger.InitJaeger(cfg)
+	if err != nil {
+		appLogger.Fatal("cannot create tracer", err)
+	}
+	appLogger.Info("Jaeger connected")
+
+	opentracing.SetGlobalTracer(tracer)
+	defer closer.Close()
+	appLogger.Info("Opentracing connected")
+
 	http.HandleFunc("/api/v1", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("REQUEST: %v", r.RemoteAddr)
 		w.Header().Set("Content-Type", "application/json")
@@ -38,5 +51,6 @@ func main() {
 		}
 	})
 
-	log.Fatal(http.ListenAndServe(cfg.Server.Port, nil))
+	log.Fatal(http.ListenAndServe(":5000", nil))
+
 }

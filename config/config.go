@@ -11,12 +11,27 @@ type Config struct {
 	AppVersion string
 	Server     Server
 	Logger     Logger
+	Jaeger     Jaeger
+	Metrics    Metrics
 }
 
 // Server config
 type Server struct {
 	Port        string
 	Development bool
+}
+
+// Metrics config
+type Metrics struct {
+	URL         string
+	ServiceName string
+}
+
+// Jaeger config
+type Jaeger struct {
+	Host        string
+	ServiceName string
+	LogSpans    bool
 }
 
 // Logger config
